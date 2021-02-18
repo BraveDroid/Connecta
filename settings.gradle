@@ -1,0 +1,3 @@
+include ':Connecta'
+include ':app'
+rootProject.name = "Connecta"

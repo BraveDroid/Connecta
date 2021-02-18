@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        applicationId "com.bravedroid.connecta"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+
+}
+
+dependencies {
+
+    //jvm
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    //android core
+    implementation "androidx.core:core-ktx:$versions.core_ktx"
+    implementation 'androidx.appcompat:appcompat:1.3.0-beta01'
+    // coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+    //ui
+    implementation "com.google.android.material:material:$versions.material"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle_livedata_ktx"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+
+    //implementation "'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
+//    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+
+    //lib
+    implementation project(path: ':Connecta')
+    //test
+    testImplementation "junit:junit:$versions.junit"
+    testImplementation "androidx.arch.core:core-testing:$versions.arch"
+    //android test
+    androidTestImplementation "androidx.test.ext:junit:$versions.ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso_core"
+    implementation "com.jakewharton.timber:timber:$versions.timber"
+
+}
