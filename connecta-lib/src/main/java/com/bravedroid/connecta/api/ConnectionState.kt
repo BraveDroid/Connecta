@@ -5,14 +5,16 @@ enum class ConnectionState {
     CONNECTED,
     NOT_CONNECTED;
 }
-sealed class _ConnectionState {
+
+private sealed class _ConnectionState {
     object Unknown
-   sealed class Connected{
-       class WithWifi
-       class WithCellular
-   }
-   sealed class NotConnected{
-       class NoSignal
-       class NoInternet
-   }
+    sealed class Connected {
+        class WithWifi
+        class WithCellular
+    }
+
+    sealed class NotConnected {
+        class NoSignal
+        class NoInternet
+    }
 }

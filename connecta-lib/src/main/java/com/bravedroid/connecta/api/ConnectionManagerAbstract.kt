@@ -16,7 +16,7 @@ import kotlin.coroutines.CoroutineContext
 
 // All this work should not be in Main thread
 
-abstract class ConnectionManagerAbstract(
+ abstract class ConnectionManagerAbstract(
     private val cm: ConnectivityManager,
     final override val coroutineContext: CoroutineContext,
 ) : CoroutineScope {
@@ -40,7 +40,7 @@ abstract class ConnectionManagerAbstract(
     )
 
     // should be called to start looking for network
-    fun onStart() {
+    fun onStartCheckingNetworkState() {
         launch {
             val hasTcpConnection = withContext(coroutineContext) {
                 hasTcpConnection()
@@ -55,7 +55,7 @@ abstract class ConnectionManagerAbstract(
     }
 
     // should be called to stop looking for network and release callback
-    fun onStop() {
+    fun onStopCheckingNetworkState() {
         cm.unregisterNetworkCallback(networkCallback)
     }
 

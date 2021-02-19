@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
-class CheckerNetworkCallback(
+internal class CheckerNetworkCallback(
     private val cm: ConnectivityManager,
     private val onNetworkAvailableAction: (network: Network) -> Unit,
     private val onNetworkLostAction: (network: Network) -> Unit,

@@ -5,9 +5,9 @@ import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Socket
 
-object GooglePingChecker {
+internal object GooglePingChecker {
 
-    fun hasTcpConnection(): Boolean =
+    internal fun hasTcpConnection(): Boolean =
         try {
             Timber.d("PINGING google.")
             val socket = Socket()

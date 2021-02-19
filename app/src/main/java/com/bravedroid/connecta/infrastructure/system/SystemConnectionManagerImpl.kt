@@ -11,7 +11,6 @@ class SystemConnectionManagerImpl(private val cm: ConnectionManagerFlow) :
         it == com.bravedroid.connecta.api.ConnectionState.UNKNOWN
     }.map(ConnectionStateMapper::mapToConnectionState)
 
-    override fun startChecking() = cm.onStart()
-    override fun stopChecking() = cm.onStop()
+    override fun startChecking() = cm.onStartCheckingNetworkState()
+    override fun stopChecking() = cm.onStopCheckingNetworkState()
 }
-
