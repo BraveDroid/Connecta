@@ -22,6 +22,8 @@ class ConnectaDemoApplication : Application(), ViewModelStoreOwner {
         SystemModule(context, applicationCoroutineContext)
     }
 
+    override fun getViewModelStore(): ViewModelStore = vms
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
@@ -29,6 +31,4 @@ class ConnectaDemoApplication : Application(), ViewModelStoreOwner {
         }
         context = this
     }
-
-    override fun getViewModelStore(): ViewModelStore = vms
 }
