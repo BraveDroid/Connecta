@@ -60,7 +60,9 @@ dependencies {
 //    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
 
     //lib
-    implementation project(path: ':Connecta')
+    //implementation project(path: ':Connecta')
+    implementation 'com.github.BraveDroid:Connecta:1.0.0'
+
     //test
     testImplementation "junit:junit:$versions.junit"
     testImplementation "androidx.arch.core:core-testing:$versions.arch"

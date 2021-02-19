@@ -1,3 +1,3 @@
-include ':Connecta'
+include ':connecta-lib'
 include ':app'
 rootProject.name = "Connecta"
