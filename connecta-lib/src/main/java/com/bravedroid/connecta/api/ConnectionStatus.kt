@@ -1,12 +1,12 @@
 package com.bravedroid.connecta.api
 
-enum class ConnectionState {
+enum class ConnectionStatus {
     UNKNOWN,
     CONNECTED,
     NOT_CONNECTED;
 }
 
-private sealed class _ConnectionState {
+private sealed class _ConnectionStatus {
     object Unknown
     sealed class Connected {
         class WithWifi
