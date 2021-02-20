@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.map
 class SystemConnectionManagerImpl(private val cm: ConnectionManagerFlow) :
     SystemConnectionManagerFlow {
     override fun checkConnectionAsFlow() = cm.isConnectedToInternet.filterNot {
-        it == com.bravedroid.connecta.api.ConnectionState.UNKNOWN
-    }.map(ConnectionStateMapper::mapToConnectionState)
+        it == com.bravedroid.connecta.api.ConnectionStatus.UNKNOWN
+    }.map(ConnectionStateMapper::mapToConnectionStatus)
 
-    override fun startChecking() = cm.onStartCheckingNetworkState()
-    override fun stopChecking() = cm.onStopCheckingNetworkState()
+    override fun startChecking() = cm.startCheckingNetworkStatus()
+    override fun stopChecking() = cm.stopCheckingNetworkStatus()
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bravedroid.connecta.domain.enteties.ConnectionState
+import com.bravedroid.connecta.domain.entities.ConnectionStatus
 import com.bravedroid.connecta.domain.events.EventBus
 import com.bravedroid.connecta.domain.usecases.CheckNetworkStateUsesCases
 import com.bravedroid.connecta.presentation.events.ShowConnectedStateEvent
@@ -37,7 +37,7 @@ class MainViewModel(
                 Timber.tag("EVENTBUS").d(" init1 $it")
             }
             .filter {
-                it == ConnectionState.CONNECTED && hasReceivedNotConnected.get()
+                it == ConnectionStatus.CONNECTED && hasReceivedNotConnected.get()
             }
             .onEach {
                 Timber.tag("EVENTBUS").d(" init2 $it")
