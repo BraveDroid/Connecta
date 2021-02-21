@@ -5,11 +5,12 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.res.ColorStateList
+import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import com.bravedroid.connecta.R
 
@@ -17,7 +18,7 @@ class InternetConnectionStatusView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
-) : androidx.appcompat.widget.AppCompatTextView(context, attrs, defStyleAttr) {
+) : AppCompatTextView(context, attrs, defStyleAttr) {
     companion object {
         private const val DEFAULT_NOT_CONNECTED_STATUS_TEXT = "No Connection "
         private const val DEFAULT_CONNECTED_STATUS_TEXT = "Back Online "
@@ -50,12 +51,23 @@ class InternetConnectionStatusView @JvmOverloads constructor(
         failAnimatorSet = createFailAnimatorSet()
         animatorsList = listOf(successAnimatorSet, failAnimatorSet)
 
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.Connecta_InternetConnectionStatusView,
-            defStyleAttr,
-            0,
-        ).let { typedArray ->
+        input = createViewInput(context, attrs, defStyleAttr)
+    }
+
+    private fun createViewInput(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+    ): Input {
+        val input: Input
+        var typedArray: TypedArray? = null
+        try {
+            typedArray = context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.Connecta_InternetConnectionStatusView,
+                defStyleAttr,
+                0,
+            )
             input = Input(
                 connectedStatusText = typedArray.getString(
                     R.styleable.Connecta_InternetConnectionStatusView_textConnectedStatus,
@@ -80,8 +92,10 @@ class InternetConnectionStatusView @JvmOverloads constructor(
                     DEFAULT_NOT_CONNECTED_STATUS_TEXT_COLOR,
                 ),
             )
-            typedArray.recycle()
+        } finally {
+            typedArray?.recycle()
         }
+        return input
     }
 
     private fun createFailAnimatorSet(): AnimatorSet = AnimatorSet().apply {
