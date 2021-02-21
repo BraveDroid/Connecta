@@ -30,19 +30,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/connected_btn" />
 
-        <TextView
+        <com.bravedroid.connecta.ui.InternetConnectionStatusView
             android:id="@+id/connection_check_view"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:background="@color/cardview_shadow_start_color"
-            android:text="Connection check "
-            android:visibility="gone"
-            android:textAlignment="center"
             android:fontFamily="sans-serif-condensed"
-            tools:visibility="visible"
             android:padding="2dp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            app:colorConnectedStatus="@color/statusConnected"
+            app:colorNotConnectedStatus="@color/statusNotConnected"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:textColorConnectedStatus="@color/white"
+            app:textColorNotConnectedStatus="@color/white"
+            tools:visibility="visible" />
+
+        <!--        app:textConnectedStatus="YEEES"-->
+        <!--        app:textNotConnectedStatus="NOOOO"-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

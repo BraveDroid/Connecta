@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Connecta_InternetConnectionStatusView">
+        <attr name="textConnectedStatus" format="string" />
+        <attr name="textNotConnectedStatus" format="string" />
+        <attr name="colorConnectedStatus" format="color" />
+        <attr name="colorNotConnectedStatus" format="color" />
+        <attr name="textColorConnectedStatus" format="color" />
+        <attr name="textColorNotConnectedStatus" format="color" />
+    </declare-styleable>
+</resources>

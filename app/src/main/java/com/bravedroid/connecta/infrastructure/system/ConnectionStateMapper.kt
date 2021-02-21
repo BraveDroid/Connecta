@@ -1,15 +1,15 @@
 package com.bravedroid.connecta.infrastructure.system
 
-import com.bravedroid.connecta.domain.enteties.ConnectionState
-import com.bravedroid.connecta.api.ConnectionState as Connecta
+import com.bravedroid.connecta.domain.entities.ConnectionStatus
+import com.bravedroid.connecta.api.ConnectionStatus as Connecta
 
 object ConnectionStateMapper {
-    fun mapToConnectionState(
-        connectionState: com.bravedroid.connecta.api.ConnectionState
-    ): ConnectionState =
-        if (connectionState == Connecta.CONNECTED) {
-            ConnectionState.CONNECTED
+    fun mapToConnectionStatus(
+        connectionStatus: com.bravedroid.connecta.api.ConnectionStatus
+    ): ConnectionStatus =
+        if (connectionStatus == Connecta.CONNECTED) {
+            ConnectionStatus.CONNECTED
         } else {
-            ConnectionState.NOT_CONNECTED
+            ConnectionStatus.NOT_CONNECTED
         }
 }

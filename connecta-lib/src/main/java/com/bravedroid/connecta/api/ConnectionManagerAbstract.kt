@@ -27,26 +27,26 @@ import kotlin.coroutines.CoroutineContext
         onNetworkAvailableAction = {
             validNetworks += it
             if (hasValidNetwork) {
-                updateStream(ConnectionState.CONNECTED)
+                updateStream(ConnectionStatus.CONNECTED)
             }
         },
         onNetworkLostAction = {
             validNetworks -= it
             if (!hasValidNetwork) {
-                updateStream(ConnectionState.NOT_CONNECTED)
+                updateStream(ConnectionStatus.NOT_CONNECTED)
             }
         },
         coroutineContext,
     )
 
     // should be called to start looking for network
-    fun onStartCheckingNetworkState() {
+    fun startCheckingNetworkStatus() {
         launch {
             val hasTcpConnection = withContext(coroutineContext) {
                 hasTcpConnection()
             }
 
-            updateStream(if (hasTcpConnection) ConnectionState.CONNECTED else ConnectionState.NOT_CONNECTED)
+            updateStream(if (hasTcpConnection) ConnectionStatus.CONNECTED else ConnectionStatus.NOT_CONNECTED)
             val networkRequest = NetworkRequest.Builder()
                 .addCapability(NET_CAPABILITY_INTERNET)
                 .build()
@@ -55,21 +55,21 @@ import kotlin.coroutines.CoroutineContext
     }
 
     // should be called to stop looking for network and release callback
-    fun onStopCheckingNetworkState() {
+    fun stopCheckingNetworkStatus() {
         cm.unregisterNetworkCallback(networkCallback)
     }
 
-    protected abstract fun updateStream(connectionState: ConnectionState)
+    protected abstract fun updateStream(connectionStatus: ConnectionStatus)
 }
 
 class ConnectionManagerFlow(
     cm: ConnectivityManager,
     coroutineContext: CoroutineContext,
 ) : ConnectionManagerAbstract(cm, coroutineContext) {
-    private val _isConnectedToInternet = MutableStateFlow<ConnectionState>(ConnectionState.UNKNOWN)
-    val isConnectedToInternet: Flow<ConnectionState> = _isConnectedToInternet
-    override fun updateStream(connectionState: ConnectionState) {
-        _isConnectedToInternet.value = connectionState
+    private val _isConnectedToInternet = MutableStateFlow<ConnectionStatus>(ConnectionStatus.UNKNOWN)
+    val isConnectedToInternet: Flow<ConnectionStatus> = _isConnectedToInternet
+    override fun updateStream(connectionStatus: ConnectionStatus) {
+        _isConnectedToInternet.value = connectionStatus
     }
 }
 
@@ -77,9 +77,9 @@ class ConnectionManagerLiveData(
     cm: ConnectivityManager,
     coroutineContext: CoroutineContext,
 ) : ConnectionManagerAbstract(cm, coroutineContext) {
-    private val _isConnectedToInternet = MutableLiveData<ConnectionState>(ConnectionState.UNKNOWN)
-    val isConnectedToInternet: LiveData<ConnectionState> = _isConnectedToInternet
-    override fun updateStream(connectionState: ConnectionState) {
-        _isConnectedToInternet.postValue(connectionState)
+    private val _isConnectedToInternet = MutableLiveData<ConnectionStatus>(ConnectionStatus.UNKNOWN)
+    val isConnectedToInternet: LiveData<ConnectionStatus> = _isConnectedToInternet
+    override fun updateStream(connectionStatus: ConnectionStatus) {
+        _isConnectedToInternet.postValue(connectionStatus)
     }
 }

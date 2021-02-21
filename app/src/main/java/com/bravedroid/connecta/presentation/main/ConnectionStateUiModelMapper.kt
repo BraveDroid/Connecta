@@ -1,6 +1,6 @@
 package com.bravedroid.connecta.presentation.main
 
-import com.bravedroid.connecta.domain.enteties.ConnectionState
+import com.bravedroid.connecta.domain.entities.ConnectionStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -11,12 +11,12 @@ class ConnectionStateUiModelMapper(
     private val hasReceivedNotConnectedMutableStateFlow: MutableStateFlow<Boolean>,
 
     ) {
-    fun mapToConnectionStateUiModel(connectionState: ConnectionState): ConnectionStateUiModel? =
+    fun mapToConnectionStateUiModel(connectionStatus: ConnectionStatus): ConnectionStateUiModel? =
         when {
-            connectionState == ConnectionState.CONNECTED && hasReceivedNotConnected.get() -> {
+            connectionStatus == ConnectionStatus.CONNECTED && hasReceivedNotConnected.get() -> {
                 ConnectionStateUiModel.DISPLAY_CONNECTED_STATE
             }
-            connectionState == ConnectionState.CONNECTED && !hasReceivedNotConnected.get() -> {
+            connectionStatus == ConnectionStatus.CONNECTED && !hasReceivedNotConnected.get() -> {
                 null
             }
             else -> {
@@ -26,9 +26,9 @@ class ConnectionStateUiModelMapper(
         }
 
     fun mapToConnectionStateUiModel1(
-        connectionState: ConnectionState,
+        connectionStatus: ConnectionStatus,
     ): Flow<ConnectionStateUiModel> =
-        if (connectionState == ConnectionState.NOT_CONNECTED) {
+        if (connectionStatus == ConnectionStatus.NOT_CONNECTED) {
             hasReceivedNotConnectedMutableStateFlow.value = true
             ConnectionStateUiModel.DISPLAY_NOT_CONNECTED_STATE.toFlow()
         } else {
