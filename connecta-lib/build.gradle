@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     //jvm
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
     //android core
@@ -46,8 +45,7 @@ dependencies {
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
     //Lifecycle
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle_livedata_ktx"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_runtime_ktx"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle_ktx"
     //test
     testImplementation "junit:junit:$versions.junit"
     //android test
@@ -55,6 +53,4 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso_core"
     //log
     implementation "com.jakewharton.timber:timber:$versions.timber"
-
-
 }
