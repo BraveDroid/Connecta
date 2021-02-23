@@ -23,9 +23,13 @@ internal class CheckerNetworkCallback(
 
         if (hasInternetCapability) {
             launch {
-                if (GooglePingChecker.hasTcpConnection()) {
+                val socket = network.socketFactory.createSocket()
+                val hasTcpConnection = GooglePingChecker.hasTcpConnection(socket)
+                if (hasTcpConnection) {
                     Timber.d("onAvailable: adding network. $network")
                     onNetworkAvailableAction(network)
+                } else {
+                    onNetworkLostAction(network)
                 }
             }
         }

@@ -16,25 +16,29 @@ import kotlin.coroutines.CoroutineContext
 
 // All this work should not be in Main thread
 
- abstract class ConnectionManagerAbstract(
+abstract class ConnectionManagerAbstract(
     private val cm: ConnectivityManager,
     final override val coroutineContext: CoroutineContext,
 ) : CoroutineScope {
     private val validNetworks: MutableSet<Network> = HashSet()
     private val hasValidNetwork get() = validNetworks.isNotEmpty()
+    private fun updateStream() {
+        if (hasValidNetwork) {
+            updateStream(ConnectionStatus.CONNECTED)
+        } else {
+            updateStream(ConnectionStatus.NOT_CONNECTED)
+        }
+    }
+
     private val networkCallback: ConnectivityManager.NetworkCallback = CheckerNetworkCallback(
         cm = cm,
         onNetworkAvailableAction = {
             validNetworks += it
-            if (hasValidNetwork) {
-                updateStream(ConnectionStatus.CONNECTED)
-            }
+            updateStream()
         },
         onNetworkLostAction = {
             validNetworks -= it
-            if (!hasValidNetwork) {
-                updateStream(ConnectionStatus.NOT_CONNECTED)
-            }
+            updateStream()
         },
         coroutineContext,
     )
@@ -66,7 +70,8 @@ class ConnectionManagerFlow(
     cm: ConnectivityManager,
     coroutineContext: CoroutineContext,
 ) : ConnectionManagerAbstract(cm, coroutineContext) {
-    private val _isConnectedToInternet = MutableStateFlow<ConnectionStatus>(ConnectionStatus.UNKNOWN)
+    private val _isConnectedToInternet =
+        MutableStateFlow<ConnectionStatus>(ConnectionStatus.UNKNOWN)
     val isConnectedToInternet: Flow<ConnectionStatus> = _isConnectedToInternet
     override fun updateStream(connectionStatus: ConnectionStatus) {
         _isConnectedToInternet.value = connectionStatus
