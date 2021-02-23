@@ -7,13 +7,14 @@ import java.net.Socket
 
 internal object GooglePingChecker {
 
-    internal fun hasTcpConnection(): Boolean =
+    internal fun hasTcpConnection(socket: Socket? = null): Boolean =
         try {
-            Timber.d("PINGING google.")
-            val socket = Socket()
-            socket.connect(InetSocketAddress("8.8.8.8", 53), 1_500)
-            socket.close()
-            Timber.d("PING success.")
+            (socket ?: Socket()).let {
+                Timber.d("PINGING google.")
+                it.connect(InetSocketAddress("8.8.8.8", 53), 1_500)
+                Timber.d("PING success.")
+                it.close()
+            }
             true
         } catch (e: IOException) {
             Timber.e("No internet connection. $e")
