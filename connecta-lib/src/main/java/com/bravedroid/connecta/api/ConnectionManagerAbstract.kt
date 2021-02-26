@@ -10,8 +10,10 @@ import com.bravedroid.connecta.api.GooglePingChecker.hasTcpConnection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
 // All this work should not be in Main thread
@@ -73,6 +75,8 @@ class ConnectionManagerFlow(
     private val _isConnectedToInternet =
         MutableStateFlow<ConnectionStatus>(ConnectionStatus.UNKNOWN)
     val isConnectedToInternet: Flow<ConnectionStatus> = _isConnectedToInternet
+        .debounce(TimeUnit.SECONDS.toMillis(1))
+
     override fun updateStream(connectionStatus: ConnectionStatus) {
         _isConnectedToInternet.value = connectionStatus
     }
