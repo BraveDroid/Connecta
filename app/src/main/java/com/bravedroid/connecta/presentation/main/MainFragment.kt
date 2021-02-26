@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,29 +20,33 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.main_fragment) {
     companion object {
         fun newInstance() = MainFragment()
     }
 
     private lateinit var eventBus: EventBus
     private lateinit var viewModel: MainViewModel
-    private lateinit var binding: MainFragmentBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View = DataBindingUtil.inflate<MainFragmentBinding>(
-        inflater,
-        R.layout.main_fragment,
-        container,
-        false,
-    ).also {
-        binding = it
-    }.root
+    //private lateinit var binding: MainFragmentBinding
+    private val binding: MainFragmentBinding by dataBinding()
+
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?,
+//    ): View = DataBindingUtil.inflate<MainFragmentBinding>(
+//        inflater,
+//        R.layout.main_fragment,
+//        container,
+//        false,
+//    ).also {
+//        binding = it
+//    }.root
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
